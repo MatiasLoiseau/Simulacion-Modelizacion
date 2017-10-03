@@ -1,6 +1,7 @@
 package sistema;
 
-public class Cronometro {
+//Tiene que ser  implements runnable segun Agus
+public class Cronometro{
 	
 	//Variables
 	public int tiempoSimulacion;
