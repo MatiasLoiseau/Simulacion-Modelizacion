@@ -19,7 +19,20 @@ public class Cronometro {
 		setTiempoSimulacion(0);
 	}
 	public void iterador() {
-		
+		//Thread.sleep(1)
+		//Si no esta frenado tiene que sumar el tiempo. 1 o 0 ?
+	}
+	public void mostrarDatosCronometro() {
+		System.out.println("El tiempo transcurrido es" + getTiempoSimulacion());
+	}
+	public void estadisticaInicializarCronometro() {
+		//Implementame luego
+	}
+	public void estadisticaActualizarCronometro() {
+		//Implementame luego
+	}
+	public void estadisticaObtenerCronometro() {
+		//Implementame luego
 	}
 	
 }
