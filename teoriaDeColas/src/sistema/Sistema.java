@@ -15,5 +15,31 @@ public class Sistema {
 	}
 	
 
+	//Getters and Setters
+	public Cronometro getCronometro() {
+		return cronometro;
+	}
+	public void setCronometro(Cronometro cronometro) {
+		this.cronometro = cronometro;
+	}
+	public Cola getCola() {
+		return cola;
+	}
+	public void setCola(Cola cola) {
+		this.cola = cola;
+	}
+	public Thread getHilo() {
+		return hilo;
+	}
+	public void setHilo(Thread hilo) {
+		this.hilo = hilo;
+	}
+	public Servidor[] getListaServidores() {
+		return listaServidores;
+	}
+	public void setListaServidores(Servidor[] listaServidores) {
+		this.listaServidores = listaServidores;
+	}
+	
 
 }
