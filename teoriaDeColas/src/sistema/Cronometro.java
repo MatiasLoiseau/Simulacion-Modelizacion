@@ -4,27 +4,27 @@ package sistema;
 public class Cronometro implements Runnable{
 	
 	//Variables
-	public int tiempoSimulacion;
-	public boolean continuar=true;
+	private int tiempoSimulacion;
+	private boolean continuar=true;
+	
+	private Thread hiloCronometro;
 
 	public Cronometro() {
-		inicializacion();
+		setTiempoSimulacion(0);
+		this.hiloCronometro = new Thread(this);
+		this.hiloCronometro.start();
 	}
 	
-	public void iterarCronometro () {
-		while (!continuar) {
+	public void run () {
+		while (continuar == true) {
 			try {
-		      Thread.sleep (1);
-		      tiempoSimulacion++;
+		      Thread.sleep (10);
+		      this.tiempoSimulacion++;
 	      }
 	      catch (InterruptedException err) {
 		      err.printStackTrace();
 	      }
 		}
-	}
-	
-	public void run () {
-		iterarCronometro ();
 	}
 	
 	//Getters and setters
@@ -44,10 +44,6 @@ public class Cronometro implements Runnable{
 		this.continuar = continuar;
 	}
 	
-	//funciones
-	public void inicializacion() {
-		setTiempoSimulacion(0);
-	}
 
 	public void mostrarDatosCronometro() {
 		System.out.println("El tiempo transcurrido es" + getTiempoSimulacion());

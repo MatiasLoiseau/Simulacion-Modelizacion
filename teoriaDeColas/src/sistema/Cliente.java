@@ -1,13 +1,21 @@
 package sistema;
 
 public class Cliente {
-	public double tiempoInicioSistema;
-	public double tiempoInicioServidor;
-	public double tiempoSalidaSistema;
+	private double tiempoInicioSistema;
+	private double tiempoInicioServidor;
+	private double tiempoSalidaSistema;
 	
 	public Cliente(double tiempoInicioSistema) {
 		this.setTiempoInicioSistema(tiempoInicioSistema);
 	}
+	
+	public void mostrarInformacion() {
+		System.out.println("Informacion cliente:");
+		System.out.println("Entro al sistema: " + this.getTiempoInicioSistema());
+		System.out.println("Entro al servidor: " + this.getTiempoInicioServidor());
+		System.out.println("Salio: " + this.getTiempoSalidaSistema());
+	}
+	
 	public double getTiempoInicioSistema() {
 		return tiempoInicioSistema;
 	}

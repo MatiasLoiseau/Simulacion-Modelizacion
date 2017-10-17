@@ -1,12 +1,14 @@
 package sistema;
 
 public class Sistema implements Runnable{
-	public Cronometro cronometro;
-	public Cola cola;
-	public Cliente cliente;
-	public Servidor servidor;
-	public long lambda;
-	public int cantClientesMaximos;
+	private Cronometro cronometro;
+	private Cola cola;
+	private Cliente cliente;
+	private Servidor servidor;
+	private long lambda;
+	private int cantClientesMaximos;
+	
+	private Thread hiloSistema;
 	
 
 	public Sistema (long lambda, long mu, int cantServidores, int cantClientesMaximos) {
@@ -18,24 +20,22 @@ public class Sistema implements Runnable{
 		this.cola = new Cola ();
 		
 		//falta implementar muchos servidores
-		this.servidor = new Servidor(mu, cola);
+		this.servidor = new Servidor(mu, cola, this.cronometro);
 		
 		this.cantClientesMaximos = cantClientesMaximos;
 		
-		this.run();
-		this.servidor.run();
-		this.cronometro.run();
+		this.hiloSistema = new Thread(this);
 		
+		hiloSistema.start();
 		
 	}
 	
 	public void run () {
 		for(int x=0; x<cantClientesMaximos; x++) {
 			try {
-				Thread.sleep(this.lambda);
 				cliente = new Cliente(this.cronometro.getTiempoSimulacion());
 				cola.put(cliente);
-				System.out.println("Te puse un wacho");
+				Thread.sleep(this.lambda);
 		      }
 		    catch (InterruptedException err) {
 			      err.printStackTrace();
