@@ -1,17 +1,20 @@
 package sistema;
 
+import java.util.Random;
+
 public class Sistema implements Runnable{
 	private Cronometro cronometro;
 	private Cola cola;
 	private Cliente cliente;
 	private Servidor servidor;
-	private long lambda;
+	private double lambda;
 	private int cantClientesMaximos;
+	private Random rand;
 	
 	private Thread hiloSistema;
 	
 
-	public Sistema (long lambda, long mu, int cantServidores, int cantClientesMaximos) {
+	public Sistema (double lambda, double mu, int cantServidores, int cantClientesMaximos) {
 		this.cronometro = new Cronometro();
 		
 		setLambda(lambda);
@@ -26,21 +29,30 @@ public class Sistema implements Runnable{
 		
 		this.hiloSistema = new Thread(this);
 		
+		rand = new Random(System.currentTimeMillis());
+		
 		hiloSistema.start();
 		
 	}
+	
 	
 	public void run () {
 		for(int x=0; x<cantClientesMaximos; x++) {
 			try {
 				cliente = new Cliente(this.cronometro.getTiempoSimulacion());
 				cola.put(cliente);
-				Thread.sleep(this.lambda);
+				Thread.sleep(tiempoCliente());
 		      }
 		    catch (InterruptedException err) {
 			      err.printStackTrace();
 		      }
 		}
+	}
+	
+	public long tiempoCliente() {
+		long tiempo = Math.round(1000 * Math.log(1 - rand.nextDouble()) / (-lambda));
+		System.out.println("Tiempo al proximo cliente: " + tiempo);
+		return tiempo;
 	}
 
 	//Getters and Setters
@@ -60,11 +72,11 @@ public class Sistema implements Runnable{
 	public void setServidor(Servidor servidor) {
 		this.servidor = servidor;
 	}
-	public long getLambda() {
+	public double getLambda() {
 		return lambda;
 	}
-	public void setLambda(long lambda) {
-		this.lambda = lambda * 1000; //Convert to seconds
+	public void setLambda(double lambda) {
+		this.lambda = lambda; //Convert to seconds
 	}
 	public int getCantClientesMaximos() {
 		return cantClientesMaximos;
