@@ -5,7 +5,7 @@ public class Cliente implements Runnable{
 	private double tiempoSalidaSistema;
 	private double tiempoCola;//es el tiempo que entro al servidor
 	private double tiempoServidor;//tiempo simulacion - tiempo inicio servidor
-	private double tiempoSimulacion;//tiempo que suma de a 1 mili segundo
+	private double tiempoSimulacion;//tiempo que esta en el sistema
 	private boolean continuar;
 	
 	private Thread hiloCliente;
@@ -29,7 +29,6 @@ public class Cliente implements Runnable{
 		}
 	}
 	
-	//Cambiar los tiempos, el cronometro no tiene que llevar la cuenta ! ! ! !
 	public void mostrarInformacion() {
 		System.out.println("Informacion cliente:");
 		System.out.println("Tiempo en la cola: " + this.getTiempoCola());

@@ -4,6 +4,7 @@ import java.util.Random;
 
 public class Servidor implements Runnable{
 
+	private Estadistica estadistica;
 	private double mu;
 	private Cola cola;
 	private Random rand;
@@ -11,10 +12,11 @@ public class Servidor implements Runnable{
 	
 	private Thread hiloServidor;
 	
-	public Servidor(double mu, Cola cola, int id) {
+	public Servidor(double mu, Cola cola, int id, Estadistica estadistica) {
 		setMu(mu);
 		setCola(cola);
 		setId(id);
+		setEstadistica(estadistica);
 		this.rand = new Random(System.currentTimeMillis());
 
 		this.hiloServidor = new Thread(this);
@@ -30,9 +32,11 @@ public class Servidor implements Runnable{
 				Thread.sleep(tiempoServidor());
 				clienteEnServidor.setTiempoSalidaSistema();
 				clienteEnServidor.setTiempoServidor();
-				System.out.println("//////////////////////////INICIO//////////////////////////////");
-				System.out.println("En el servidor:  " + id);
-				clienteEnServidor.mostrarInformacion();	
+				//System.out.println("//////////////////////////INICIO//////////////////////////////");
+				//System.out.println("En el servidor:  " + id);
+				//clienteEnServidor.mostrarInformacion();	
+				this.estadistica.agregarCliente(clienteEnServidor);
+				this.estadistica.mostrar();
 					///////////////////////////////////
 				//El método stop() es obsoleto
 				clienteEnServidor.getHiloCliente().stop();	
@@ -76,6 +80,12 @@ public class Servidor implements Runnable{
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public Estadistica getEstadistica() {
+		return estadistica;
+	}
+	public void setEstadistica(Estadistica estadistica) {
+		this.estadistica = estadistica;
 	}
 	
 }

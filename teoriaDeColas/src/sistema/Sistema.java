@@ -17,10 +17,11 @@ public class Sistema implements Runnable{
 
 	public Sistema (double lambda, double mu, int cantServidores) {
 		setLambda(lambda);
+		setContinuar(true);
+		this.estadistica = new Estadistica();
 		this.cola = new Cola ();
 		this.listaServidores = new Servidor[cantServidores];
 		inicializacionServidores(cantServidores, mu, this.cola);
-		setContinuar(true);
 		this.hiloSistema = new Thread(this);
 		rand = new Random(System.currentTimeMillis());
 		hiloSistema.start();
@@ -42,7 +43,7 @@ public class Sistema implements Runnable{
 	
 	public void inicializacionServidores(int cantServidores, double mu, Cola cola) {
 		for(int x=0; x<cantServidores; x++) {
-			this.listaServidores[x] = new Servidor(mu, cola,  x);
+			this.listaServidores[x] = new Servidor(mu, cola, x, this.estadistica);
 		}
 	}
 	
