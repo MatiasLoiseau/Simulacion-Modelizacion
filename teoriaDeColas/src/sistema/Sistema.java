@@ -3,43 +3,34 @@ package sistema;
 import java.util.Random;
 
 public class Sistema implements Runnable{
-	private Cronometro cronometro;
+	private Estadistica estadistica;
 	private Cola cola;
 	private Cliente cliente;
 	private Servidor servidor;
+	private Servidor listaServidores[];
 	private double lambda;
-	private int cantClientesMaximos;
+	private boolean continuar;
 	private Random rand;
 	
 	private Thread hiloSistema;
 	
 
-	public Sistema (double lambda, double mu, int cantServidores, int cantClientesMaximos) {
-		this.cronometro = new Cronometro();
-		
+	public Sistema (double lambda, double mu, int cantServidores) {
 		setLambda(lambda);
-		
-		//falta implementar cola
 		this.cola = new Cola ();
-		
-		//falta implementar muchos servidores
-		this.servidor = new Servidor(mu, cola, this.cronometro);
-		
-		this.cantClientesMaximos = cantClientesMaximos;
-		
+		this.listaServidores = new Servidor[cantServidores];
+		inicializacionServidores(cantServidores, mu, this.cola);
+		setContinuar(true);
 		this.hiloSistema = new Thread(this);
-		
 		rand = new Random(System.currentTimeMillis());
-		
 		hiloSistema.start();
 		
 	}
 	
-	
 	public void run () {
-		for(int x=0; x<cantClientesMaximos; x++) {
+		while(continuar == true) {
 			try {
-				cliente = new Cliente(this.cronometro.getTiempoSimulacion());
+				cliente = new Cliente();
 				cola.put(cliente);
 				Thread.sleep(tiempoCliente());
 		      }
@@ -49,15 +40,19 @@ public class Sistema implements Runnable{
 		}
 	}
 	
+	public void inicializacionServidores(int cantServidores, double mu, Cola cola) {
+		for(int x=0; x<cantServidores; x++) {
+			this.listaServidores[x] = new Servidor(mu, cola,  x);
+		}
+	}
+	
 	public long tiempoCliente() {
 		long tiempo = Math.round(1000 * Math.log(1 - rand.nextDouble()) / (-lambda));
-		System.out.println("Tiempo al proximo cliente: " + tiempo);
+		//System.out.println("Tiempo al proximo cliente: " + tiempo);
 		return tiempo;
 	}
 
 	//Getters and Setters
-	public Cronometro getCronometro() {return cronometro;}
-	public void setCronometro(Cronometro cronometro) {this.cronometro = cronometro;}
 	public Cola getCola() {return cola;}
 	public void setCola(Cola cola) {this.cola = cola;}
 	public Cliente getCliente() {
@@ -78,11 +73,36 @@ public class Sistema implements Runnable{
 	public void setLambda(double lambda) {
 		this.lambda = lambda; //Convert to seconds
 	}
-	public int getCantClientesMaximos() {
-		return cantClientesMaximos;
+	public Servidor[] getListaServidores() {
+		return listaServidores;
 	}
-	public void setCantClientesMaximos(int cantClientesMaximos) {
-		this.cantClientesMaximos = cantClientesMaximos;
+	public void setListaServidores(Servidor[] listaServidores) {
+		this.listaServidores = listaServidores;
 	}
+	public boolean isContinuar() {
+		return continuar;
+	}
+	public void setContinuar(boolean continuar) {
+		this.continuar = continuar;
+	}
+	public Random getRand() {
+		return rand;
+	}
+	public void setRand(Random rand) {
+		this.rand = rand;
+	}
+	public Thread getHiloSistema() {
+		return hiloSistema;
+	}
+	public void setHiloSistema(Thread hiloSistema) {
+		this.hiloSistema = hiloSistema;
+	}
+	public Estadistica getEstadistica() {
+		return estadistica;
+	}
+	public void setEstadistica(Estadistica estadistica) {
+		this.estadistica = estadistica;
+	}
+
 	
 }

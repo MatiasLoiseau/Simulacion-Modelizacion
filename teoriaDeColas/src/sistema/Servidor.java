@@ -6,15 +6,15 @@ public class Servidor implements Runnable{
 
 	private double mu;
 	private Cola cola;
-	private Cronometro cronometro;
 	private Random rand;
+	private int id;
 	
 	private Thread hiloServidor;
 	
-	public Servidor(double mu, Cola cola, Cronometro cronometro) {
+	public Servidor(double mu, Cola cola, int id) {
 		setMu(mu);
 		setCola(cola);
-		setCronometro(cronometro);
+		setId(id);
 		this.rand = new Random(System.currentTimeMillis());
 
 		this.hiloServidor = new Thread(this);
@@ -24,16 +24,22 @@ public class Servidor implements Runnable{
 	public void run () {
 		while(true) {
 			try {
-				Cliente clienteASacar = cola.peek();
-				if(clienteASacar != null) {
-					//long tiempoAtencion = Math.round(1000 * (Math.log (1-Math.random ())/-mu));
+				Cliente clienteEnServidor = cola.take();
+				clienteEnServidor.setTiempoInicioServidor();
+				clienteEnServidor.setTiempoCola();
+				Thread.sleep(tiempoServidor());
+				clienteEnServidor.setTiempoSalidaSistema();
+				clienteEnServidor.setTiempoServidor();
+				System.out.println("//////////////////////////INICIO//////////////////////////////");
+				System.out.println("En el servidor:  " + id);
+				clienteEnServidor.mostrarInformacion();	
+					///////////////////////////////////
+				//El método stop() es obsoleto
+				clienteEnServidor.getHiloCliente().stop();	
+				//El metodo interrupt me tira errores
+				//clienteEnServidor.getHiloCliente().interrupt();	
+				
 					
-					clienteASacar.setTiempoInicioServidor(cronometro.getTiempoSimulacion());
-					Thread.sleep(tiempoServidor());
-					clienteASacar.setTiempoSalidaSistema(cronometro.getTiempoSimulacion());
-					cola.take();
-					clienteASacar.mostrarInformacion();	
-				}
 		      }
 		    catch (InterruptedException err) {
 			      err.printStackTrace();
@@ -43,7 +49,7 @@ public class Servidor implements Runnable{
 	
 	public long tiempoServidor() {
 		long tiempo = Math.round(1000 * Math.log(1 - rand.nextDouble()) / (-mu));
-		System.out.println("Tiempo de atencion del servidor: " + tiempo);
+		//System.out.println("Tiempo de atencion del servidor: " + tiempo + " En el servidor: " + id);
 		return tiempo;
 	}
 	
@@ -59,12 +65,17 @@ public class Servidor implements Runnable{
 	public void setHiloServidor(Thread hiloServidor) {
 		this.hiloServidor = hiloServidor;
 	}
-
-	public Cronometro getCronometro() {
-		return cronometro;
+	public Random getRand() {
+		return rand;
 	}
-	public void setCronometro(Cronometro cronometro) {
-		this.cronometro = cronometro;
+	public void setRand(Random rand) {
+		this.rand = rand;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 }

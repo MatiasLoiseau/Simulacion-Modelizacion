@@ -6,12 +6,11 @@ public class Principal {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		double lambda = 0.5;
-		double mu = 0.6;
+		double lambda = 0.9;
+		double mu = 0.1;
 		int cantServidores = 1;
-		int cantClientes = 1000;
 		
-		sistema = new Sistema (lambda, mu, cantServidores, cantClientes);
+		sistema = new Sistema (lambda, mu, cantServidores);
 		
 
 	}
