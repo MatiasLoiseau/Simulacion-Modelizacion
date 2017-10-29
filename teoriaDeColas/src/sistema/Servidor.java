@@ -32,13 +32,10 @@ public class Servidor implements Runnable{
 				Thread.sleep(tiempoServidor());
 				clienteEnServidor.setTiempoSalidaSistema();
 				clienteEnServidor.setTiempoServidor();
-				//System.out.println("//////////////////////////INICIO//////////////////////////////");
-				//System.out.println("En el servidor:  " + id);
-				//clienteEnServidor.mostrarInformacion();	
 				this.estadistica.agregarCliente(clienteEnServidor);
 				this.estadistica.mostrar();
-					///////////////////////////////////
-				//El método stop() es obsoleto
+				///////////////////////////////////
+				//El método stop() es "obsoleto"
 				clienteEnServidor.getHiloCliente().stop();	
 				//El metodo interrupt me tira errores
 				//clienteEnServidor.getHiloCliente().interrupt();	
@@ -53,7 +50,6 @@ public class Servidor implements Runnable{
 	
 	public long tiempoServidor() {
 		long tiempo = Math.round(1000 * Math.log(1 - rand.nextDouble()) / (-mu));
-		//System.out.println("Tiempo de atencion del servidor: " + tiempo + " En el servidor: " + id);
 		return tiempo;
 	}
 	

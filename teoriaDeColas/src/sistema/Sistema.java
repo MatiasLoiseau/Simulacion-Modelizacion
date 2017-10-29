@@ -6,7 +6,6 @@ public class Sistema implements Runnable{
 	private Estadistica estadistica;
 	private Cola cola;
 	private Cliente cliente;
-	private Servidor servidor;
 	private Servidor listaServidores[];
 	private double lambda;
 	private boolean continuar;
@@ -18,14 +17,13 @@ public class Sistema implements Runnable{
 	public Sistema (double lambda, double mu, int cantServidores) {
 		setLambda(lambda);
 		setContinuar(true);
-		this.estadistica = new Estadistica();
 		this.cola = new Cola ();
+		this.estadistica = new Estadistica(this.cola);
 		this.listaServidores = new Servidor[cantServidores];
 		inicializacionServidores(cantServidores, mu, this.cola);
 		this.hiloSistema = new Thread(this);
 		rand = new Random(System.currentTimeMillis());
-		hiloSistema.start();
-		
+		hiloSistema.start();		
 	}
 	
 	public void run () {
@@ -45,11 +43,19 @@ public class Sistema implements Runnable{
 		for(int x=0; x<cantServidores; x++) {
 			this.listaServidores[x] = new Servidor(mu, cola, x, this.estadistica);
 		}
+		/*Servidores con mu cambiados
+		 * this.listaServidores[0] = new Servidor(0.2, cola, x, this.estadistica);
+		 * this.listaServidores[1] = new Servidor(0,3, cola, x, this.estadistica);
+		 * this.listaServidores[2] = new Servidor(0,4, cola, x, this.estadistica);
+		 * 
+		 */
 	}
 	
 	public long tiempoCliente() {
+		//Antes era:
+		//-Math.log (1-Math.random ())/lambda
+		//Y multiplicaba los 1000 cuando asignaba a lambda
 		long tiempo = Math.round(1000 * Math.log(1 - rand.nextDouble()) / (-lambda));
-		//System.out.println("Tiempo al proximo cliente: " + tiempo);
 		return tiempo;
 	}
 
@@ -62,17 +68,11 @@ public class Sistema implements Runnable{
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	public Servidor getServidor() {
-		return servidor;
-	}
-	public void setServidor(Servidor servidor) {
-		this.servidor = servidor;
-	}
 	public double getLambda() {
 		return lambda;
 	}
 	public void setLambda(double lambda) {
-		this.lambda = lambda; //Convert to seconds
+		this.lambda = lambda;
 	}
 	public Servidor[] getListaServidores() {
 		return listaServidores;
@@ -105,5 +105,4 @@ public class Sistema implements Runnable{
 		this.estadistica = estadistica;
 	}
 
-	
 }
