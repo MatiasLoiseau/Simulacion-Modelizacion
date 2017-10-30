@@ -6,7 +6,9 @@ public class Materia {
 	private DiaTurno bloque1;
 	private DiaTurno bloque2;
 	private int profesorAsignado;
+	private int puntaje;
 	
+
 	public Materia(int id, DiaTurno b1, DiaTurno b2, int profesor) {
 		setId(id);
 		setBloque1(b1);
@@ -44,5 +46,10 @@ public class Materia {
 	public void setBloque2(DiaTurno bloque2) {
 		this.bloque2 = bloque2;
 	}
-
+	public int getPuntaje() {
+		return puntaje;
+	}
+	public void setPuntaje(int puntaje) {
+		this.puntaje = puntaje;
+	}
 }

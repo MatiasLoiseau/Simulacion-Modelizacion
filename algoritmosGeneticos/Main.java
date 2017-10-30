@@ -112,15 +112,15 @@ public class Main {
 		
 		funciones.primeraGeneracion(listaPosiblesMaterias);
 		
-		int puntaje = 0;
+		//int puntaje = 0;
 		//primera generacion
-		while(puntaje<90) {
+		//while(puntaje<90) {
 			//for de la posible lista de materias
 			//calcular el fitness
 			//si el fitness es alto salir con break ? ?? ?
 			//reproducir
 			//mutar
-		}
+		//}
 	}
 
 }
