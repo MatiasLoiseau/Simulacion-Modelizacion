@@ -106,6 +106,12 @@ public class Main {
 		//otros profes
 	
 		
+		ArrayList<Materia> listaPosiblesMaterias = new ArrayList<Materia>();
+		
+		Implementaciones funciones = new Implementaciones();
+		
+		funciones.primeraGeneracion(listaPosiblesMaterias);
+		
 		int puntaje = 0;
 		//primera generacion
 		while(puntaje<90) {
