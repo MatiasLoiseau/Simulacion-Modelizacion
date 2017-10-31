@@ -10,6 +10,7 @@ public class Implementaciones {
 	public Implementaciones() {
 		rand = new Random(System.currentTimeMillis());
 	}
+	
 	//	For del 1 al 27 (Todos los ids de las materias)
 	//	Creo dias y turnos randoms
 	//	Creo un profesor random
@@ -39,10 +40,9 @@ public class Implementaciones {
 			if(profesorActual.getMateriasProfesor().contains(materia.getId()) == false) {
 				materia.setPuntaje(0);
 			}
-			else {
-				int puntajeMateria = materia.getPuntaje();
-				int suma = recorrerDiaTurno(materia, profesorActual) + puntajeMateria;
-				materia.setPuntaje(suma);
+			else {													//Es necesario el puntaje anterior ? Creo que no
+				//int suma = recorrerDiaTurno(materia, profesorActual) + materia.getPuntaje();
+				materia.setPuntaje(recorrerDiaTurno(materia, profesorActual));
 			}
 		}
 	}
@@ -50,16 +50,20 @@ public class Implementaciones {
 	public int recorrerDiaTurno(Materia materia, Profesor profesor) {
 		int valor=0;
 		for(DiaTurno diaTurnoProfesor: profesor.getDiasTurnosProfesor()) {
-			if((materia.getBloque1().getDia() == diaTurnoProfesor.getDia()) && 
-					(materia.getBloque1().getTurno() == diaTurnoProfesor.getTurno())) {
+			if(materia.getBloque1().getDia() == diaTurnoProfesor.getDia()){
 				valor = valor + 1;
-			}
-			if((materia.getBloque2().getDia() == diaTurnoProfesor.getDia()) && 
-					(materia.getBloque2().getTurno() == diaTurnoProfesor.getTurno())) {
+				if(materia.getBloque1().getTurno() == diaTurnoProfesor.getTurno()) {
+					valor = valor + 2;
+					}
+				}
+			if(materia.getBloque2().getDia() == diaTurnoProfesor.getDia()){
 				valor = valor + 1;
-			}
-			
-		}
+				if(materia.getBloque2().getTurno() == diaTurnoProfesor.getTurno()) {
+					valor = valor + 2;
+					}
+				}
+				
+			} 
 		return valor;
 	}
 	
@@ -69,17 +73,56 @@ public class Implementaciones {
 	//	4 Agarro dos materias, las reproduzco, creo dos materias nuevas y las meto en la nueva lista
 	//	5 Asi con las 10 mejores materias
 	public void reproduccion(ArrayList<Materia> listaMaterias, ArrayList<Profesor> listaProfesores) {
+		ArrayList<Materia> listaConMejorFitnes = new ArrayList<Materia>();
+		agregarMejorMitad(listaMaterias, listaConMejorFitnes);
 		
+	}
+	
+	public void agregarMejorMitad(ArrayList<Materia> listaMaterias, ArrayList<Materia> listaMateriasVacia) {
+		int contador = 0;
+		while(contador<10) {
+			int maxPuntaje = 0;
+			Materia materiaMejorPuntaje;
+			for(Materia materia: listaMaterias) {
+				if(materia.getPuntaje() > maxPuntaje) {
+					materiaMejorPuntaje = materia;
+					maxPuntaje = materia.getPuntaje();
+				}
+			}
+			//listaMateriasVacia.add(materiaMejorPuntaje);
+		}
 	}
 	
 	//	1 Agarro 5 materias al azar y las muto
 	public void mutacion(ArrayList<Materia> listaMaterias) {
+		for(int x=0; x<5; x++) {
+			int materiaCualquiera = (int)(1 + 27*rand.nextDouble());
+			asignarParametrosRandom(listaMaterias.get(materiaCualquiera));
+		}
 		
+	}
+	
+	public void asignarParametrosRandom(Materia materia) {
+		int diaOpcion1 = (int)(1 + 5*rand.nextDouble());
+		int turnoOpcion1 = (int)(1 + 2*rand.nextDouble());
+		DiaTurno primeraOpcion = new DiaTurno(diaOpcion1, turnoOpcion1);
+		int diaOpcion2 = (int)(1 + 5*rand.nextDouble());
+		int turnoOpcion2 = (int)(1 + 2*rand.nextDouble());
+		DiaTurno segundaOpcion = new DiaTurno(diaOpcion2, turnoOpcion2);
+		int profesorRandom = (int)(1 + 20*rand.nextDouble());
+		materia.setBloque1(primeraOpcion);
+		materia.setBloque2(segundaOpcion);
+		materia.setProfesorAsignado(profesorRandom);
 	}
 	
 	public void recorrer(ArrayList<Materia> listaMaterias) {
 		for(Materia m: listaMaterias) {
-			System.out.println(m.getProfesorAsignado());
+			System.out.println("Profesor:  " + m.getProfesorAsignado());
+			System.out.println("Dia Bloque 1:  " + m.getBloque1().getDia());
+			System.out.println("Turno Bloque 1:  " + m.getBloque1().getTurno());
+			System.out.println("Dia Bloque 2:  " + m.getBloque2().getDia());
+			System.out.println("Turno Bloque 2:  " + m.getBloque2().getTurno());
+			System.out.println("////////////////////////////////////////////////");
 		}
 	}
 	
