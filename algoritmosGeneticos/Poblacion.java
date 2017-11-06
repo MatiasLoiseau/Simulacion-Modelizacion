@@ -40,7 +40,7 @@ public class Poblacion {
 			int contadorPuntaje = 0;
 			for(Materia materia: individuo.getListaMaterias()) {
 				int indiceProfesorMateriaActual = materia.getProfesorAsignado();
-				Profesor profesorActual = listaProfesores.get(indiceProfesorMateriaActual);
+				Profesor profesorActual = listaProfesores.get(indiceProfesorMateriaActual - 1);
 				//Si la materia no esta dada por el profesor, se le asigna 0
 				if(profesorActual.getMateriasProfesor().contains(materia.getId()) == false) {
 					materia.setPuntaje(0);
@@ -81,9 +81,9 @@ public class Poblacion {
 	//	5 Asi con las 10 mejores materias
 	public void reproduccion() {
 		Collections.sort(getPoblacion());
-		for(int x=250; x<500; x++) {
-			this.getPoblacion().remove(x);
-		}
+		//for(int x=250; x<500; x++) {
+		//	this.getPoblacion().remove(x);
+		//}
 		for(int x=0; x<250; x=x+2) {
 			Individuo individuo1 = this.getPoblacion().get(x);
 			Individuo individuo2 = this.getPoblacion().get(x+1);
@@ -96,7 +96,7 @@ public class Poblacion {
 		Individuo individuoHijo2 = new Individuo();
 		for(Materia materia: individuo1.getListaMaterias()) {
 			if(materia.getPuntaje() == 0) {
-				Materia materiaIndividuo2 = individuo2.getListaMaterias().get(materia.getId());
+				Materia materiaIndividuo2 = individuo2.getListaMaterias().get(materia.getId() - 1);
 				Materia nuevaMateria1 = new Materia(materia.getId(), materiaIndividuo2.getBloque1(), 
 						materiaIndividuo2.getBloque2(), materiaIndividuo2.getProfesorAsignado());
 				individuoHijo1.getListaMaterias().add(nuevaMateria1);
@@ -109,7 +109,7 @@ public class Poblacion {
 		}
 		for(Materia materia: individuo2.getListaMaterias()) {
 			if(materia.getPuntaje() == 0) {
-				Materia materiaIndividuo1 = individuo1.getListaMaterias().get(materia.getId());
+				Materia materiaIndividuo1 = individuo1.getListaMaterias().get(materia.getId() - 1);
 				Materia nuevaMateria1 = new Materia(materia.getId(), materiaIndividuo1.getBloque1(), 
 						materiaIndividuo1.getBloque2(), materiaIndividuo1.getProfesorAsignado());
 				individuoHijo2.getListaMaterias().add(nuevaMateria1);
@@ -120,6 +120,8 @@ public class Poblacion {
 				individuoHijo2.getListaMaterias().add(nuevaMateria2);
 			}
 		}
+		this.getPoblacion().add(individuoHijo1);
+		this.getPoblacion().add(individuoHijo2);
 	}
 	
 	public ArrayList<Individuo> getPoblacion() {

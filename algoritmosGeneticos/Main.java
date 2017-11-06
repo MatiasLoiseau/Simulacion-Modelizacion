@@ -390,13 +390,50 @@ public class Main {
 		Profesor allen = new Profesor(20, "Allen",diasTurnosAllen, materiasAllen);
 		listaProfesores.add(allen);		
 		
-
-
+		
 				
 		
 		//ArrayList<Materia> listaPosiblesMaterias = new ArrayList<Materia>();
 		
-		Implementaciones funciones = new Implementaciones();
+		//Implementaciones funciones = new Implementaciones();
+		
+		Poblacion pob = new Poblacion();
+		pob.primeraGeneracion();
+		int mejorLista=0;
+		boolean listaEncontrada = false;
+		int contador=0;
+		
+		while(listaEncontrada == false) {
+			pob.fitness(listaProfesores);
+			for(int x=0; x<200; x++) {
+				if(pob.getPoblacion().get(x).esValida() && (pob.getPoblacion().get(x).getPuntajeFitness()>160)) {
+					mejorLista = x;
+					listaEncontrada=true;
+				}
+			}
+			if(listaEncontrada==false) {
+				pob.reproduccion();
+				//falta mutar
+			}
+			contador++;
+			System.out.println("contador: " + contador);
+			
+		}
+		
+		System.out.println("MEJOR LISTA ENCONTRADA");
+		pob.getPoblacion().get(mejorLista).mostrame();
+		
+		//int contador = 0;
+		//for (Individuo indi: pob.getPoblacion()) {
+			//System.out.println("El puntaje del individuo " + contador + " es: " + indi.getPuntajeFitness());
+			//contador++;
+			//for (Materia mate: indi.getListaMaterias()) {
+				//System.out.println("La materia: " + mate.getId() + "Se da el día: " + mate.getBloque1().getDia());
+			//}
+			
+		//}
+		
+		//System.out.println(pob.getPoblacion().get(5).);
 		
 		//funciones.primeraGeneracion(listaPosiblesMaterias);
 		//funciones.recorrer(listaPosiblesMaterias);

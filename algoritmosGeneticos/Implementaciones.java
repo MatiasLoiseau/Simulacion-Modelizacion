@@ -19,7 +19,7 @@ public class Implementaciones {
 	public void primeraGeneracion(ArrayList<Materia> listaMaterias) {
 		for(int i = 1; i <= 27;i++){
 			
-			int diaOpcion1 = (int)(1 + 5*rand.nextDouble());
+			int diaOpcion1 = (int)(1.0 + 5.0*rand.nextDouble());
 			int turnoOpcion1 = (int)(1 + 2*rand.nextDouble());
 			DiaTurno primeraOpcion = new DiaTurno(diaOpcion1, turnoOpcion1);
 			int diaOpcion2 = (int)(1 + 5*rand.nextDouble());
