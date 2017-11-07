@@ -391,32 +391,28 @@ public class Main {
 		listaProfesores.add(allen);		
 		
 		
-				
-		
-		//ArrayList<Materia> listaPosiblesMaterias = new ArrayList<Materia>();
-		
-		//Implementaciones funciones = new Implementaciones();
 		
 		Poblacion pob = new Poblacion();
-		pob.primeraGeneracion();
+		pob.primeraGeneracion(listaProfesores);
 		int mejorLista=0;
 		boolean listaEncontrada = false;
 		int contador=0;
 		
 		while(listaEncontrada == false) {
+			pob.fitnessZero();
 			pob.fitness(listaProfesores);
-			for(int x=0; x<200; x++) {
-				if(pob.getPoblacion().get(x).esValida() && (pob.getPoblacion().get(x).getPuntajeFitness()>160)) {
-					mejorLista = x;
-					listaEncontrada=true;
-				}
+			if(pob.getPoblacion().get(0).getPuntajeFitness()>=38) {
+				listaEncontrada=true;
 			}
 			if(listaEncontrada==false) {
 				pob.reproduccion();
-				//falta mutar
+				pob.mutacion(listaProfesores);
 			}
 			contador++;
 			System.out.println("contador: " + contador);
+			System.out.println(pob.getPoblacion().get(0).getPuntajeFitness());
+			
+			
 			
 		}
 		

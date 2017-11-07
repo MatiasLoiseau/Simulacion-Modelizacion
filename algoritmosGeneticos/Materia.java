@@ -5,15 +5,17 @@ public class Materia {
 	private String nombre;
 	private DiaTurno bloque1;
 	private DiaTurno bloque2;
-	private int profesorAsignado;
+	private int profesorAsignadoB1;
+	private int profesorAsignadoB2;
 	private int puntaje;
 	
 
-	public Materia(int id, DiaTurno b1, DiaTurno b2, int profesor) {
+	public Materia(int id, DiaTurno b1, DiaTurno b2, int profesorb1, int profesorb2) {
 		setId(id);
 		setBloque1(b1);
 		setBloque2(b2);
-		setProfesorAsignado(profesor);
+		setProfesorAsignadoB1(profesorb1);
+		setProfesorAsignadoB2(profesorb2);
 	}
 	
 	public int getId() {
@@ -27,12 +29,6 @@ public class Materia {
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-	public int getProfesorAsignado() {
-		return profesorAsignado;
-	}
-	public void setProfesorAsignado(int profesor) {
-		this.profesorAsignado = profesor;
 	}
 	public DiaTurno getBloque1() {
 		return bloque1;
@@ -51,5 +47,17 @@ public class Materia {
 	}
 	public void setPuntaje(int puntaje) {
 		this.puntaje = puntaje;
+	}
+	public int getProfesorAsignadoB1() {
+		return profesorAsignadoB1;
+	}
+	public void setProfesorAsignadoB1(int profesorAsignadoB1) {
+		this.profesorAsignadoB1 = profesorAsignadoB1;
+	}
+	public int getProfesorAsignadoB2() {
+		return profesorAsignadoB2;
+	}
+	public void setProfesorAsignadoB2(int profesorAsignadoB2) {
+		this.profesorAsignadoB2 = profesorAsignadoB2;
 	}
 }
