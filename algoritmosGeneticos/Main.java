@@ -390,7 +390,7 @@ public class Main {
 		Profesor allen = new Profesor(20, "Allen",diasTurnosAllen, materiasAllen);
 		listaProfesores.add(allen);		
 		
-		
+		//------------------------------------------------------------------------------//
 		
 		Poblacion pob = new Poblacion();
 		pob.primeraGeneracion(listaProfesores);
@@ -412,37 +412,10 @@ public class Main {
 			System.out.println("contador: " + contador);
 			System.out.println(pob.getPoblacion().get(0).getPuntajeFitness());
 			
-			
-			
 		}
 		
 		System.out.println("MEJOR LISTA ENCONTRADA");
 		pob.getPoblacion().get(mejorLista).mostrame();
-		
-		//int contador = 0;
-		//for (Individuo indi: pob.getPoblacion()) {
-			//System.out.println("El puntaje del individuo " + contador + " es: " + indi.getPuntajeFitness());
-			//contador++;
-			//for (Materia mate: indi.getListaMaterias()) {
-				//System.out.println("La materia: " + mate.getId() + "Se da el día: " + mate.getBloque1().getDia());
-			//}
-			
-		//}
-		
-		//System.out.println(pob.getPoblacion().get(5).);
-		
-		//funciones.primeraGeneracion(listaPosiblesMaterias);
-		//funciones.recorrer(listaPosiblesMaterias);
-		
-		//int puntaje = 0;
-		//primera generacion
-		//while(puntaje<90) {
-			//for de la posible lista de materias
-			//calcular el fitness
-			//si el fitness es alto salir con break ? ?? ?
-			//reproducir
-			//mutar
-		//}
-	}
+			}
 
 }
